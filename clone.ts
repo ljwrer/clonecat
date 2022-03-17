@@ -73,16 +73,16 @@ class ObjCloneCat extends CloneCat {
 }
 
 export const clone = (val: any, map = new WeakMap()) => {
-  const cats = [
-    new UndefinedCloneCat(),
-    new NullCloneCat(),
-    new BooleanCloneCat(),
-    new NumberCloneCat(),
-    new StringCloneCat(),
-    new ArrayCloneCat(),
-    new ObjCloneCat(map)
-  ]
-  for (const cat of cats) {
+  function * cats() {
+    yield new UndefinedCloneCat()
+    yield new NullCloneCat()
+    yield new BooleanCloneCat()
+    yield new NumberCloneCat()
+    yield new StringCloneCat()
+    yield new ArrayCloneCat()
+    yield new ObjCloneCat(map)
+  }
+  for (const cat of cats()) {
     if (cat.is(val)) {
       return cat.clone(val)
     }
