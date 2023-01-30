@@ -8,9 +8,9 @@ abstract class CloneCat {
   }
 }
 
-class NullCloneCat extends CloneCat {
+class NilCloneCat extends CloneCat {
   is (val: any) {
-    return val === null
+    return val === null || val === undefined
   }
 }
 
@@ -23,12 +23,6 @@ class NumberCloneCat extends CloneCat {
 class StringCloneCat extends CloneCat {
   is (val: any) {
     return typeof val === 'string'
-  }
-}
-
-class UndefinedCloneCat extends CloneCat {
-  is (val: any) {
-    return val === 'undefined'
   }
 }
 
@@ -74,8 +68,7 @@ class ObjCloneCat extends CloneCat {
 
 export const clone = (val: any, map = new WeakMap()) => {
   function * cats() {
-    yield new UndefinedCloneCat()
-    yield new NullCloneCat()
+    yield new NilCloneCat()
     yield new BooleanCloneCat()
     yield new NumberCloneCat()
     yield new StringCloneCat()
